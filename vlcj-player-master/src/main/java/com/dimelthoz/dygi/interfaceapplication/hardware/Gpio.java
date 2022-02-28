@@ -13,7 +13,7 @@ public class Gpio {
     }
 
     public static void digitalWrite(int pin, boolean level){
-        String command = "gpio write " + pin + (level?"1":"0");
+        String command = "gpio write " + pin + " " + (level?"1":"0");
         CommandPrompt.execute(command);
     }
 
