@@ -14,23 +14,18 @@ public class Signal {
     public void setLevel(boolean level){
         this.currentLevel = level;
 
-        if(level==ON_LEVEL){
+        if(level==ON_LEVEL && lastLevel!=ON_LEVEL){
             initTimeOn = System.currentTimeMillis();
-        } else {
-            lastTimeOn = System.currentTimeMillis() - lastTimeOn;
+        } else if(level!=ON_LEVEL && lastLevel==ON_LEVEL) {
+            lastTimeOn = System.currentTimeMillis() - initTimeOn;
         }
-
+        lastLevel = level;
     }
 
     public long getLastTimeOn(){
         return lastTimeOn;
     }
 
-    public boolean haveTurnedOn(){
-        boolean hasTurnedOn = currentLevel != lastLevel;
-        lastLevel = currentLevel;
-        return hasTurnedOn;
-    }
 
     public boolean isOn(){
         return ON_LEVEL == currentLevel;
