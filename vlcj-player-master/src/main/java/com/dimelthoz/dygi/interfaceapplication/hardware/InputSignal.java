@@ -22,7 +22,8 @@ public class InputSignal {
                 yellowSignal.setLevel(Gpio.digitalRead(GpioManager.PIN_YELLOW_SIGNAL));
                 reserveSignal.setLevel(Gpio.digitalRead(GpioManager.PIN_RESERVE_SIGNAL));
 
-            } catch (GpioException ignored) {}
+            } catch (GpioException ignored) {
+            }
 
             treatInputSignal();
             timerReadInput = System.currentTimeMillis();
@@ -30,26 +31,29 @@ public class InputSignal {
     }
 
     private static void treatInputSignal() {
-        if ((hasMultipleSignal() || hasNoSignal()) && !application().isPlaying(mrlMultipleSignal)){
-            System.out.println("hasMultipleSignal | hasNoSignal");
-            application().mediaPlayer().media().play(mrlMultipleSignal);
+        if ((hasMultipleSignal() || hasNoSignal())) {
+            if (!application().isPlaying(mrlMultipleSignal)) {
+                System.out.println("hasMultipleSignal | hasNoSignal");
+                application().mediaPlayer().media().play(mrlMultipleSignal);
+            }
         } else {
-
-            if(redSignal.isOn() && !application().isPlaying(mrlClientSample)){
-                System.out.println("red signal");
-                application().mediaPlayer().media().play(mrlClientSample);
-            }
-
-            else if(greenSignal.isOn() && !application().isPlaying(mrlCountdown)){
-                System.out.println("green signal");
-                long videoDuration = application().mediaPlayer().media().info().duration();
-                String skipTime = ":start-time=" + Math.min(0, videoDuration - greenSignal.getLastTimeOn());
-                application().mediaPlayer().media().play(mrlCountdown, skipTime);
-            }
-
-            else if(yellowSignal.isOn() && !application().isPlaying(mrlYellowSignal)){
-                System.out.println("yellow signal");
-                application().mediaPlayer().media().play(mrlYellowSignal);
+            if (redSignal.isOn()) {
+                if (!application().isPlaying(mrlClientSample)) {
+                    System.out.println("red signal");
+                    application().mediaPlayer().media().play(mrlClientSample);
+                }
+            } else if (greenSignal.isOn()) {
+                if (!application().isPlaying(mrlCountdown)) {
+                    System.out.println("green signal");
+                    long videoDuration = application().mediaPlayer().media().info().duration();
+                    String skipTime = ":start-time=" + Math.min(0, videoDuration - greenSignal.getLastTimeOn());
+                    application().mediaPlayer().media().play(mrlCountdown, skipTime);
+                }
+            } else if (yellowSignal.isOn()) {
+                if (!application().isPlaying(mrlYellowSignal)) {
+                    System.out.println("yellow signal");
+                    application().mediaPlayer().media().play(mrlYellowSignal);
+                }
             }
         }
 
@@ -59,7 +63,7 @@ public class InputSignal {
         return redSignal.isOn() && greenSignal.isOn() || redSignal.isOn() && yellowSignal.isOn() || greenSignal.isOn() && yellowSignal.isOn();
     }
 
-    private static boolean hasNoSignal(){
+    private static boolean hasNoSignal() {
         return !redSignal.isOn() && !greenSignal.isOn() && !yellowSignal.isOn();
     }
 }
