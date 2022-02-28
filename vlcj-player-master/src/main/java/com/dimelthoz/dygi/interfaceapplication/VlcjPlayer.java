@@ -46,7 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.dimelthoz.dygi.interfaceapplication.Application.application;
-import static com.dimelthoz.dygi.interfaceapplication.medias.MediasManager.mrlMultipleSignal;
+import static com.dimelthoz.dygi.interfaceapplication.medias.MediasManager.*;
 
 /**
  * Application entry-point.

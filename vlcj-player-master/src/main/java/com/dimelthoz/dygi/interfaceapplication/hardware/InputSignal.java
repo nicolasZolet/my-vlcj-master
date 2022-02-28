@@ -1,5 +1,9 @@
 package com.dimelthoz.dygi.interfaceapplication.hardware;
 
+import javax.print.attribute.standard.Media;
+
+import java.io.File;
+
 import static com.dimelthoz.dygi.interfaceapplication.Application.application;
 import static com.dimelthoz.dygi.interfaceapplication.medias.MediasManager.*;
 
@@ -45,7 +49,7 @@ public class InputSignal {
             } else if (greenSignal.isOn()) {
                 if (!application().isPlaying(mrlCountdown)) {
                     System.out.println("green signal");
-                    long videoDuration = application().mediaPlayer().media().info().duration();
+                    long videoDuration = 60000;
                     String skipTime = ":start-time=" + Math.min(0, videoDuration - greenSignal.getLastTimeOn());
                     application().mediaPlayer().media().play(mrlCountdown, skipTime);
                 }
