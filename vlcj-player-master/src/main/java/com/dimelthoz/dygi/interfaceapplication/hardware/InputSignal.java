@@ -21,7 +21,8 @@ public class InputSignal {
                 yellowSignal.setLevel(Gpio.digitalRead(GpioManager.PIN_YELLOW_SIGNAL));
                 reserveSignal.setLevel(Gpio.digitalRead(GpioManager.PIN_RESERVE_SIGNAL));
 
-            } catch (GpioException ignored) {}
+            } catch (GpioException ignored) {
+            }
             treatInputSignal();
             timerTreatInput = System.currentTimeMillis();
         }
@@ -57,11 +58,13 @@ public class InputSignal {
     }
 
     private static long initialTimerSignalError = System.currentTimeMillis();
-    private static final long TIME_SIGNAL_ERROR = 200;
+    private static final long TIME_SIGNAL_ERROR = 300;
 
     private static boolean hasErrorSignal() {
         if (hasMultipleSignal() || hasNoSignal()) {
-            return System.currentTimeMillis() - initialTimerSignalError > TIME_SIGNAL_ERROR;
+            boolean hasError = System.currentTimeMillis() - initialTimerSignalError > TIME_SIGNAL_ERROR;
+            initialTimerSignalError = System.currentTimeMillis();
+            return hasError;
         } else {
             initialTimerSignalError = System.currentTimeMillis();
         }
