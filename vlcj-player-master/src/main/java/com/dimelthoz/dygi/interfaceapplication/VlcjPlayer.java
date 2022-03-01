@@ -113,6 +113,7 @@ public class VlcjPlayer implements RendererDiscovererEventListener {
         app.start();
 
         GpioManager.start();
+
     }
 
     private static String val(String val) {
