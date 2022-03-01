@@ -5,8 +5,11 @@ import static com.dimelthoz.dygi.interfaceapplication.medias.MediasManager.*;
 
 public class InputSignal {
 
-    private static final long TIME_READ_INPUTS = 200;
+    private static final long TIME_READ_INPUTS = 50;
+    private static final long TIME_TREAT_INPUT = 200;
+
     private static long timerReadInput = System.currentTimeMillis();
+    private static long timerTreatInput = System.currentTimeMillis();
 
     private static final Signal redSignal = new Signal(false);
     private static final Signal greenSignal = new Signal(false);
@@ -24,9 +27,11 @@ public class InputSignal {
 
             } catch (GpioException ignored) {
             }
-
-            treatInputSignal();
             timerReadInput = System.currentTimeMillis();
+        }
+        if(System.currentTimeMillis() - timerTreatInput > TIME_TREAT_INPUT){
+            treatInputSignal();
+            timerTreatInput = System.currentTimeMillis();
         }
     }
 
