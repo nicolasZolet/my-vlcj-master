@@ -75,7 +75,7 @@ public class InputSignal {
         return hasMultipleSignal() || hasNoSignal();
     }
 
-    private static final long TIME_MULTIPLE_SIGNAL_ERROR = 300;
+    private static final long TIME_MULTIPLE_SIGNAL_ERROR = 200;
     private static long initTimerMultipleSignal = System.currentTimeMillis();
 
     private static boolean hasMultipleSignal() {
