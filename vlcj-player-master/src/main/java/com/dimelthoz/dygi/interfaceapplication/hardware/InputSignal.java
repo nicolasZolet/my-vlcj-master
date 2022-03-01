@@ -55,39 +55,45 @@ public class InputSignal {
 
     }
 
-    private static String getSkipTimeGreenSignal(){
+    private static String getSkipTimeGreenSignal() {
         long videoDuration = 60;
         long timeGreenOn = greenSignal.getLastTimeOn() / 1000; //milliseconds -> seconds
 
         double skipTimeSeconds;
 
-        if(timeGreenOn <= 1.0){
+        if (timeGreenOn <= 1.0) {
             skipTimeSeconds = videoDuration - 1.1;
-        } else if(timeGreenOn >= videoDuration){
+        } else if (timeGreenOn >= videoDuration) {
             skipTimeSeconds = 0;
         } else {
             skipTimeSeconds = videoDuration - timeGreenOn;
         }
-        return  ":start-time=" + skipTimeSeconds;
+        return ":start-time=" + skipTimeSeconds;
     }
 
-    private static long initialTimerSignalError = System.currentTimeMillis();
-    private static final long TIME_SIGNAL_ERROR = 700;
-
     private static boolean hasErrorSignal() {
-        if (hasMultipleSignal() || hasNoSignal()) {
-            return System.currentTimeMillis() - initialTimerSignalError > TIME_SIGNAL_ERROR;
-        } else {
-            initialTimerSignalError = System.currentTimeMillis();
+        return hasMultipleSignal() || hasNoSignal();
+    }
+
+    private static final long TIME_MULTIPLE_SIGNAL_ERROR = 300;
+    private static long initTimerMultipleSignal = System.currentTimeMillis();
+
+    private static boolean hasMultipleSignal() {
+        if (redSignal.isOn() && greenSignal.isOn() || redSignal.isOn() && yellowSignal.isOn() || greenSignal.isOn() && yellowSignal.isOn()) {
+            return System.currentTimeMillis() - initTimerMultipleSignal > TIME_MULTIPLE_SIGNAL_ERROR;
         }
+        initTimerMultipleSignal = System.currentTimeMillis();
         return false;
     }
 
-    private static boolean hasMultipleSignal() {
-        return redSignal.isOn() && greenSignal.isOn() || redSignal.isOn() && yellowSignal.isOn() || greenSignal.isOn() && yellowSignal.isOn();
-    }
+    private static final long TIME_NO_SIGNAL_ERROR = 600;
+    private static long initTimerNoSignal = System.currentTimeMillis();
 
     private static boolean hasNoSignal() {
-        return !redSignal.isOn() && !greenSignal.isOn() && !yellowSignal.isOn();
+        if (!redSignal.isOn() && !greenSignal.isOn() && !yellowSignal.isOn()) {
+            return System.currentTimeMillis() - initTimerNoSignal > TIME_NO_SIGNAL_ERROR;
+        }
+        initTimerNoSignal = System.currentTimeMillis();
+        return false;
     }
 }
