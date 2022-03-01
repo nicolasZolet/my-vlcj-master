@@ -72,7 +72,7 @@ public class InputSignal {
     }
 
     private static long initialTimerSignalError = System.currentTimeMillis();
-    private static final long TIME_SIGNAL_ERROR = 350;
+    private static final long TIME_SIGNAL_ERROR = 700;
 
     private static boolean hasErrorSignal() {
         if (hasMultipleSignal() || hasNoSignal()) {
