@@ -58,13 +58,11 @@ public class InputSignal {
     }
 
     private static long initialTimerSignalError = System.currentTimeMillis();
-    private static final long TIME_SIGNAL_ERROR = 300;
+    private static final long TIME_SIGNAL_ERROR = 350;
 
     private static boolean hasErrorSignal() {
         if (hasMultipleSignal() || hasNoSignal()) {
-            boolean hasError = System.currentTimeMillis() - initialTimerSignalError > TIME_SIGNAL_ERROR;
-            initialTimerSignalError = System.currentTimeMillis();
-            return hasError;
+            return System.currentTimeMillis() - initialTimerSignalError > TIME_SIGNAL_ERROR;
         } else {
             initialTimerSignalError = System.currentTimeMillis();
         }
