@@ -182,7 +182,7 @@ public class VlcjPlayer implements RendererDiscovererEventListener {
 
     private void start() {
         mainFrame.setVisible(true);
-//        application().mediaPlayer().fullScreen().toggle();
+        application().mediaPlayer().fullScreen().toggle();
         for (RendererDiscoverer discoverer : rendererDiscoverers) {
             discoverer.start();
         }
