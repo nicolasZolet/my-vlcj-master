@@ -43,9 +43,7 @@ public class InputSignal {
             } else if (greenSignal.isOn()) {
                 if (!application().isPlaying(mrlCountdown)) {
                     System.out.println("green signal");
-                    long videoDuration = 60;
-                    String skipTime = ":start-time=" + Math.max(0, videoDuration - (greenSignal.getLastTimeOn() / 1000));
-                    application().mediaPlayer().media().play(mrlCountdown, skipTime);
+                    application().mediaPlayer().media().play(mrlCountdown, getSkipTimeGreenSignal());
                 }
             } else if (yellowSignal.isOn()) {
                 if (!application().isPlaying(mrlYellowSignal)) {
@@ -55,6 +53,12 @@ public class InputSignal {
             }
         }
 
+    }
+
+    private static String getSkipTimeGreenSignal(){
+        long videoDuration = 60;
+        long skipTimeSeconds = Math.min(videoDuration,Math.max(1, videoDuration - (greenSignal.getLastTimeOn() / 1000)));
+        return ":start-time=" + skipTimeSeconds;
     }
 
     private static long initialTimerSignalError = System.currentTimeMillis();
