@@ -57,8 +57,18 @@ public class InputSignal {
 
     private static String getSkipTimeGreenSignal(){
         long videoDuration = 60;
-        long skipTimeSeconds = Math.min(videoDuration,Math.max(1, videoDuration - (greenSignal.getLastTimeOn() / 1000)));
-        return ":start-time=" + skipTimeSeconds;
+        long timeGreenOn = greenSignal.getLastTimeOn() / 1000; //milliseconds -> seconds
+
+        double skipTimeSeconds;
+
+        if(timeGreenOn <= 1.0){
+            skipTimeSeconds = videoDuration - 1.1;
+        } else if(timeGreenOn >= videoDuration){
+            skipTimeSeconds = 0;
+        } else {
+            skipTimeSeconds = videoDuration - timeGreenOn;
+        }
+        return  ":start-time=" + skipTimeSeconds;
     }
 
     private static long initialTimerSignalError = System.currentTimeMillis();
