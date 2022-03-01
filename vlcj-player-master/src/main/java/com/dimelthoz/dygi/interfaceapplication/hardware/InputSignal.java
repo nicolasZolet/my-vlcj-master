@@ -29,14 +29,14 @@ public class InputSignal {
             }
             timerReadInput = System.currentTimeMillis();
         }
-        if(System.currentTimeMillis() - timerTreatInput > TIME_TREAT_INPUT){
+        if (System.currentTimeMillis() - timerTreatInput > TIME_TREAT_INPUT) {
             treatInputSignal();
             timerTreatInput = System.currentTimeMillis();
         }
     }
 
     private static void treatInputSignal() {
-        if ((hasMultipleSignal() || hasNoSignal())) {
+        if (hasErrorSignal()) {
             if (!application().isPlaying(mrlMultipleSignal)) {
                 System.out.println("hasMultipleSignal | hasNoSignal");
                 application().mediaPlayer().media().play(mrlMultipleSignal);
@@ -51,7 +51,7 @@ public class InputSignal {
                 if (!application().isPlaying(mrlCountdown)) {
                     System.out.println("green signal");
                     long videoDuration = 60;
-                    String skipTime = ":start-time=" + Math.max(0, videoDuration - (greenSignal.getLastTimeOn()/1000));
+                    String skipTime = ":start-time=" + Math.max(0, videoDuration - (greenSignal.getLastTimeOn() / 1000));
                     application().mediaPlayer().media().play(mrlCountdown, skipTime);
                 }
             } else if (yellowSignal.isOn()) {
@@ -62,6 +62,18 @@ public class InputSignal {
             }
         }
 
+    }
+
+    private static long initialTimerSignalError = System.currentTimeMillis();
+    private static final long TIME_SIGNAL_ERROR = 200;
+
+    private static boolean hasErrorSignal() {
+        if (hasMultipleSignal() || hasNoSignal()) {
+            return System.currentTimeMillis() - initialTimerSignalError > TIME_SIGNAL_ERROR;
+        } else {
+            initialTimerSignalError = System.currentTimeMillis();
+        }
+        return false;
     }
 
     private static boolean hasMultipleSignal() {
