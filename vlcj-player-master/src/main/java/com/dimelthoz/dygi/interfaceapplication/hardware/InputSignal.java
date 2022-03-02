@@ -20,14 +20,14 @@ public class InputSignal {
 
     public static void read() {
         if (System.currentTimeMillis() - timerTreatInput > TIME_TREAT_INPUT) {
-            redSignal.setLevel(false);
-//            try {
-//                redSignal.setLevel(Gpio.digitalRead(GpioManager.PIN_RED_SIGNAL));
-//                greenSignal.setLevel(Gpio.digitalRead(GpioManager.PIN_GREEN_SIGNAL));
-//                yellowSignal.setLevel(Gpio.digitalRead(GpioManager.PIN_YELLOW_SIGNAL));
-//                reserveSignal.setLevel(Gpio.digitalRead(GpioManager.PIN_RESERVE_SIGNAL));
-//            } catch (GpioException ignored) {
-//            }
+//            redSignal.setLevel(false);
+            try {
+                redSignal.setLevel(Gpio.digitalRead(GpioManager.PIN_RED_SIGNAL));
+                greenSignal.setLevel(Gpio.digitalRead(GpioManager.PIN_GREEN_SIGNAL));
+                yellowSignal.setLevel(Gpio.digitalRead(GpioManager.PIN_YELLOW_SIGNAL));
+                reserveSignal.setLevel(Gpio.digitalRead(GpioManager.PIN_RESERVE_SIGNAL));
+            } catch (GpioException ignored) {
+            }
             treatInputSignal();
             timerTreatInput = System.currentTimeMillis();
         }
