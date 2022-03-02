@@ -1,6 +1,11 @@
 package com.dimelthoz.dygi.interfaceapplication.hardware;
 
+import com.dimelthoz.dygi.interfaceapplication.Application;
+import com.dimelthoz.dygi.interfaceapplication.medias.MediasManager;
+import com.dimelthoz.dygi.interfaceapplication.timeline.Adds;
+
 import static com.dimelthoz.dygi.interfaceapplication.Application.application;
+import static com.dimelthoz.dygi.interfaceapplication.Application.playMedia;
 import static com.dimelthoz.dygi.interfaceapplication.medias.MediasManager.*;
 
 public class InputSignal {
@@ -15,12 +20,12 @@ public class InputSignal {
 
     public static void read() {
         if (System.currentTimeMillis() - timerTreatInput > TIME_TREAT_INPUT) {
+
             try {
                 redSignal.setLevel(Gpio.digitalRead(GpioManager.PIN_RED_SIGNAL));
                 greenSignal.setLevel(Gpio.digitalRead(GpioManager.PIN_GREEN_SIGNAL));
                 yellowSignal.setLevel(Gpio.digitalRead(GpioManager.PIN_YELLOW_SIGNAL));
                 reserveSignal.setLevel(Gpio.digitalRead(GpioManager.PIN_RESERVE_SIGNAL));
-
             } catch (GpioException ignored) {
             }
             treatInputSignal();
@@ -36,39 +41,41 @@ public class InputSignal {
             }
         } else {
             if (redSignal.isOn()) {
-                if (!application().isPlaying(mrlClientSample)) {
-                    System.out.println("red signal");
-                    application().mediaPlayer().media().play(mrlClientSample);
+                if (application().isPlaying(MediasManager.pathMedias + Adds.getClientVideo()) && Adds.hasVideoEnd()) {
+                    Adds.nextClientVideo();
+                } else if (!application().isPlaying(pathMedias + Adds.getClientVideo())) {
+                    playMedia(pathMedias + Adds.getClientVideo());
+                    Adds.updateStartTimer();
                 }
+
             } else if (greenSignal.isOn()) {
                 if (!application().isPlaying(mrlCountdown)) {
-                    System.out.println("green signal");
-                    application().mediaPlayer().media().play(mrlCountdown, getSkipTimeGreenSignal());
+                    playMedia(mrlCountdown);
+                    Application.application().mediaPlayer().controls().skipTime(getSkipTimeGreenSignal());
+                    Adds.nextContainer(); //new add
                 }
             } else if (yellowSignal.isOn()) {
                 if (!application().isPlaying(mrlYellowSignal)) {
-                    System.out.println("yellow signal");
-                    application().mediaPlayer().media().play(mrlYellowSignal);
+                    playMedia(mrlYellowSignal);
                 }
             }
         }
 
     }
 
-    private static String getSkipTimeGreenSignal() {
-        long videoDuration = 60;
-        long timeGreenOn = greenSignal.getLastTimeOn() / 1000; //milliseconds -> seconds
+    private static long getSkipTimeGreenSignal() {
+        long videoDuration = 60000;
+        long timeGreenOn = greenSignal.getLastTimeOn();
+        long skipTimeSeconds;
 
-        double skipTimeSeconds;
-
-        if (timeGreenOn <= 1.0) {
-            skipTimeSeconds = videoDuration - 1.1;
+        if (timeGreenOn <= 1100) {
+            skipTimeSeconds = videoDuration - 1100;
         } else if (timeGreenOn >= videoDuration) {
             skipTimeSeconds = 0;
         } else {
             skipTimeSeconds = videoDuration - timeGreenOn;
         }
-        return ":start-time=" + skipTimeSeconds;
+        return skipTimeSeconds;
     }
 
     private static boolean hasErrorSignal() {

@@ -74,10 +74,6 @@ public final class Application {
         return ApplicationHolder.INSTANCE;
     }
 
-    public static void play() {
-
-    }
-
     public static ResourceBundle resources() {
         return resourceBundle;
     }
@@ -117,14 +113,33 @@ public final class Application {
     }
 
     public boolean isPlaying(String mrlFile) {
-        if(application().mediaPlayer().media().info() != null){
-            File mediaPlaying = new File(application().mediaPlayer().media().info().mrl());
-            File mediaCompare = new File(mrlFile);
-            return mediaPlaying.getName().equals(mediaCompare.getName());
-        }
-        return false;
+//        if(application().mediaPlayer().media().info() != null){
+//            File mediaPlaying = new File(application().mediaPlayer().media().info().mrl());
+//            File mediaCompare = new File(mrlFile);
+//            return mediaPlaying.getName().equals(mediaCompare.getName());
+//        }
+        //return false;
+        return mrlFile.equals(getLastPlayableMedia());
     }
 
+    static String lastPlayableMedia;
+    public static void playMedia(String mediaFilePath){
+        application().mediaPlayer().media().play(mediaFilePath);
+        lastPlayableMedia = mediaFilePath;
+    }
+
+    public static String getLastPlayableMedia(){
+        return lastPlayableMedia;
+    }
+
+    public String playing() {
+        if(application().mediaPlayer().media().info() != null){
+            File mediaPlaying = new File(application().mediaPlayer().media().info().mrl());
+            System.out.println("application().mediaPlayer().media().info().mrl() -> " + application().mediaPlayer().media().info().mrl());
+            return mediaPlaying.getName();
+        }
+        return "";
+    }
 
     public EmbeddedMediaPlayerComponent mediaPlayerComponent() {
         return mediaPlayerComponent;

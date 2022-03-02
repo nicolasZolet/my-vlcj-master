@@ -1,0 +1,39 @@
+{
+  "semaphore": 1,
+  "timeline": [
+    {
+      "id": 1,
+      "adds": [
+        {
+          "video": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+          "length": 15
+        },
+        {
+          "video": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+          "length": 15
+        },
+        {
+          "video": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+          "length": 15
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "adds": [
+        {
+          "video": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+          "length": 15
+        },
+        {
+          "video": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+          "length": 15
+        },
+        {
+          "video": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+          "length": 15
+        }
+      ]
+    }
+  ]
+}

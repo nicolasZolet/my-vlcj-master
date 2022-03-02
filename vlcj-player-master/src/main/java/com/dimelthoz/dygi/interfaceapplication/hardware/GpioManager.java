@@ -8,7 +8,6 @@ public class GpioManager {
     public static final int PIN_GREEN_SIGNAL = 24;
     public static final int PIN_RESERVE_SIGNAL = 25;
 
-
     public static void start() {
         setup();
         new Thread(runGpios).start();

@@ -20,6 +20,8 @@
 package com.dimelthoz.dygi.interfaceapplication;
 
 import com.dimelthoz.dygi.interfaceapplication.hardware.GpioManager;
+import com.dimelthoz.dygi.interfaceapplication.medias.MediasManager;
+import com.dimelthoz.dygi.interfaceapplication.timeline.Timeline;
 import com.dimelthoz.dygi.interfaceapplication.view.main.MainFrame;
 import uk.co.caprica.nativestreams.NativeStreams;
 import uk.co.caprica.vlcj.player.component.CallbackMediaPlayerComponent;
@@ -41,12 +43,12 @@ import com.dimelthoz.dygi.interfaceapplication.view.messages.NativeLogFrame;
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import static com.dimelthoz.dygi.interfaceapplication.Application.application;
-import static com.dimelthoz.dygi.interfaceapplication.medias.MediasManager.*;
 
 /**
  * Application entry-point.
@@ -88,7 +90,7 @@ public class VlcjPlayer implements RendererDiscovererEventListener {
 
     private final NativeLog nativeLog;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         Info info = Info.getInstance();
 
         System.out.printf("vlcj             : %s%n", info.vlcjVersion() != null ? info.vlcjVersion() : "<version not available>");
@@ -111,6 +113,8 @@ public class VlcjPlayer implements RendererDiscovererEventListener {
 
         app = new VlcjPlayer();
         app.start();
+
+        Timeline.main();
 
         GpioManager.start();
 

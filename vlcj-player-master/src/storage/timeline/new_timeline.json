@@ -1,0 +1,39 @@
+{
+  "semaphore": 1,
+  "timeline": [
+    {
+      "id": 1,
+      "adds": [
+        {
+          "video": "https://www.youtube.com/embed/ForBiggerEscapes.mp4",
+          "length": 5
+        },
+        {
+          "video": "https://www.youtube.com/embed/ForBiggerFun.mp4",
+          "length": 10
+        },
+        {
+          "video": "https://www.youtube.com/embed/ForBiggerJoyrides.mp4",
+          "length": 15
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "adds": [
+        {
+          "video": "https://www.youtube.com/embed/ForBiggerMeltdowns.mp4",
+          "length": 6
+        },
+        {
+          "video": "https://www.youtube.com/embed/WeAreGoingOnBullrun.mp4",
+          "length": 12
+        },
+        {
+          "video": "https://www.youtube.com/embed/dygi_logo.png",
+          "length": 16
+        }
+      ]
+    }
+  ]
+}
