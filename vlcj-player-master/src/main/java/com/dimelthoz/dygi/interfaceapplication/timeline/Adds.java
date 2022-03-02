@@ -6,10 +6,15 @@ public class Adds {
     private static long timerStartVideo=System.currentTimeMillis();
 
     public static void nextContainer(){
+        currentClientVideo = 0;
         currentContainer++;
         if (currentContainer >= Timeline.getClientContainers().size()){
             currentContainer = 0;
         }
+    }
+
+    public static int getIndexClientVideo(){
+        return currentClientVideo;
     }
 
     public static void setContainer(int container){

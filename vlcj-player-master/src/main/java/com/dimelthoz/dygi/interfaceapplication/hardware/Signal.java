@@ -37,7 +37,6 @@ public class Signal {
         return lastTimeOn;
     }
 
-
     public boolean isOn() {
         return currentLevel == ON_LEVEL;
     }

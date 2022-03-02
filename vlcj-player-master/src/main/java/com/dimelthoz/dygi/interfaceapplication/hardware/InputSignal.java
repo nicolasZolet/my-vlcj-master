@@ -41,18 +41,26 @@ public class InputSignal {
             }
         } else {
             if (redSignal.isOn()) {
-                if (application().isPlaying(MediasManager.pathMedias + Adds.getClientVideo()) && Adds.hasVideoEnd()) {
-                    Adds.nextClientVideo();
-                } else if (!application().isPlaying(pathMedias + Adds.getClientVideo())) {
+
+                if(Adds.getIndexClientVideo()==0 && !application().isPlaying(Adds.getClientVideo())){
                     playMedia(pathMedias + Adds.getClientVideo());
                     Adds.updateStartTimer();
                 }
+
+                else if (Adds.hasVideoEnd()) {
+                    Adds.nextClientVideo();
+                    playMedia(pathMedias + Adds.getClientVideo());
+                    Adds.updateStartTimer();
+                }
+//                else if (!application().isPlaying(pathMedias + Adds.getClientVideo())) {
+//                    playMedia(pathMedias + Adds.getClientVideo());
+//                }
 
             } else if (greenSignal.isOn()) {
                 if (!application().isPlaying(mrlCountdown)) {
                     playMedia(mrlCountdown);
                     Application.application().mediaPlayer().controls().skipTime(getSkipTimeGreenSignal());
-                    Adds.nextContainer(); //new add
+                    Adds.nextContainer();
                 }
             } else if (yellowSignal.isOn()) {
                 if (!application().isPlaying(mrlYellowSignal)) {
