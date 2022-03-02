@@ -39,6 +39,7 @@ public class InputSignal {
                 System.out.println("hasMultipleSignal | hasNoSignal");
                 application().mediaPlayer().media().play(mrlMultipleSignal);
             }
+            Adds.refreshCurrentAdds();
         } else {
             if (redSignal.isOn()) {
 

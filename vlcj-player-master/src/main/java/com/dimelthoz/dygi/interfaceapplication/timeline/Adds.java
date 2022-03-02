@@ -17,6 +17,11 @@ public class Adds {
         return currentClientVideo;
     }
 
+    public static void refreshCurrentAdds(){
+        currentClientVideo = 0;
+        currentContainer = 0;
+    }
+
     public static void setContainer(int container){
         currentContainer = container;
     }
