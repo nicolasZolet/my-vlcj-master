@@ -47,6 +47,7 @@ import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 
 import static com.dimelthoz.dygi.interfaceapplication.Application.application;
@@ -113,16 +114,13 @@ public class VlcjPlayer implements RendererDiscovererEventListener {
         setLookAndFeel();
 
         app = new VlcjPlayer();
-//        app.start();
-
-//        Timeline.main();
-//
-//        GpioManager.start();
+        app.start();
 
         new MacAddress();
 
-        System.out.println("mac address -> " + MacAddress.getMac());
+        Timeline.main();
 
+        GpioManager.start();
     }
 
     private static String val(String val) {
