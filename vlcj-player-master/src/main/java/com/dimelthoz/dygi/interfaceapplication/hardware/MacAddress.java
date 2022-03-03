@@ -1,28 +1,46 @@
 package com.dimelthoz.dygi.interfaceapplication.hardware;
 
 import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.Collections;
 import java.util.Enumeration;
 
 public class MacAddress {
 
-    private static final String MAC = "1A2B3C4D5E6F";
+    private static String MAC = "";
 
-    public static byte[] getHardwareAddress() {
+    public MacAddress() {
         try {
             Enumeration<NetworkInterface> interfaceEnumeration = NetworkInterface.getNetworkInterfaces();
             for (NetworkInterface iface : Collections.list(interfaceEnumeration)) {
-                if (!iface.isLoopback() && iface.isUp() && iface.getHardwareAddress() != null) {
-                    return iface.getHardwareAddress();
+                String mac = formatMacAddress(iface);
+                if(isMacValid(mac)){
+                    MAC = mac;
+                    break;
                 }
             }
-        } catch (Exception ex) {
-            throw new RuntimeException("Could not discover first network interface hardware address");
+        } catch (SocketException e) {
+            System.out.println(e);
         }
-        throw new RuntimeException("Could not discover first network interface hardware address");
     }
 
-    public static String getMac () {
+    private static String formatMacAddress(NetworkInterface netInt) throws SocketException {
+        byte[] mac = netInt.getHardwareAddress();
+        if (mac != null) {
+            StringBuilder sbMac = new StringBuilder();
+            for (int i = 0; i < mac.length; i++) {
+                sbMac.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? ":" : ""));
+            }
+            return sbMac.toString();
+        }
+        return "";
+    }
+
+    private static boolean isMacValid(String mac){
+        return mac.length() == 17;
+    }
+
+    public static String getMac() {
         return MAC;
     }
 }

@@ -20,6 +20,7 @@
 package com.dimelthoz.dygi.interfaceapplication;
 
 import com.dimelthoz.dygi.interfaceapplication.hardware.GpioManager;
+import com.dimelthoz.dygi.interfaceapplication.hardware.MacAddress;
 import com.dimelthoz.dygi.interfaceapplication.medias.MediasManager;
 import com.dimelthoz.dygi.interfaceapplication.timeline.Timeline;
 import com.dimelthoz.dygi.interfaceapplication.view.main.MainFrame;
@@ -112,11 +113,15 @@ public class VlcjPlayer implements RendererDiscovererEventListener {
         setLookAndFeel();
 
         app = new VlcjPlayer();
-        app.start();
+//        app.start();
 
-        Timeline.main();
+//        Timeline.main();
+//
+//        GpioManager.start();
 
-        GpioManager.start();
+        new MacAddress();
+
+        System.out.println("mac address -> " + MacAddress.getMac());
 
     }
 

@@ -36,8 +36,7 @@ public class InputSignal {
     private static void treatInputSignal() {
         if (hasErrorSignal()) {
             if (!application().isPlaying(mrlMultipleSignal)) {
-                System.out.println("hasMultipleSignal | hasNoSignal");
-                application().mediaPlayer().media().play(mrlMultipleSignal);
+                playMedia(mrlMultipleSignal);
             }
             Adds.refreshCurrentAdds();
         } else {
@@ -47,15 +46,11 @@ public class InputSignal {
                     playMedia(pathMedias + Adds.getClientVideo());
                     Adds.updateStartTimer();
                 }
-
                 else if (Adds.hasVideoEnd()) {
                     Adds.nextClientVideo();
                     playMedia(pathMedias + Adds.getClientVideo());
                     Adds.updateStartTimer();
                 }
-//                else if (!application().isPlaying(pathMedias + Adds.getClientVideo())) {
-//                    playMedia(pathMedias + Adds.getClientVideo());
-//                }
 
             } else if (greenSignal.isOn()) {
                 if (!application().isPlaying(mrlCountdown)) {
