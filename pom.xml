@@ -210,6 +210,10 @@
                     <exclude>.gitignore</exclude>
                 </excludes>
             </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>../src/main/resources</targetPath>
+            </resource>
         </resources>
     </build>
 

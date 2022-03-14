@@ -42,13 +42,13 @@ public class InputSignal {
         } else {
             if (redSignal.isOn()) {
 
-                if(Adds.getIndexClientVideo()==0 && !application().isPlaying(pathMedias + Adds.getClientVideo())){
-                    playMedia(pathMedias + Adds.getClientVideo());
+                if(Adds.getIndexClientVideo()==0 && !application().isPlaying(MEDIA_STORAGE + Adds.getClientVideo())){
+                    playMedia(MEDIA_STORAGE + Adds.getClientVideo());
                     Adds.updateStartTimer();
                 }
                 else if (Adds.hasVideoEnd()) {
                     Adds.nextClientVideo();
-                    playMedia(pathMedias + Adds.getClientVideo());
+                    playMedia(MEDIA_STORAGE + Adds.getClientVideo());
                     Adds.updateStartTimer();
                 }
 

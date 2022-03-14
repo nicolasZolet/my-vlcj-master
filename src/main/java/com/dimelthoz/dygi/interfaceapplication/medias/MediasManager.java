@@ -1,13 +1,10 @@
 package com.dimelthoz.dygi.interfaceapplication.medias;
 
-import com.dimelthoz.dygi.interfaceapplication.utils.FileManager;
-
-import java.io.File;
-
 public class MediasManager {
-    public static final String mrlMultipleSignal = FileManager.getAbsolutePath(new File("src/media/error.png"));
-    public static final String mrlYellowSignal = FileManager.getAbsolutePath(new File("src/media/yellow.png"));
-    public static final String mrlCountdown = FileManager.getAbsolutePath(new File("src/media/countdown.mp4"));
-    public static final String mrlClientSample = FileManager.getAbsolutePath(new File("src/media/ForBiggerEscapes.mp4"));
-    public static final String pathMedias = "src/media/";
+    public static final String DEFAULT_STORAGE = "src/main/resources/";
+    public static final String MEDIA_STORAGE = DEFAULT_STORAGE + "media/";
+    public static final String mrlMultipleSignal = MEDIA_STORAGE + "error.png";
+    public static final String mrlYellowSignal = MEDIA_STORAGE + "yellow.png";
+    public static final String mrlCountdown = MEDIA_STORAGE + "countdown.mp4";
+    public static final String mrlClientSample = MEDIA_STORAGE + "ForBiggerEscapes.mp4";
 }
