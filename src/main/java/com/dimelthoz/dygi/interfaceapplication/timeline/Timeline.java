@@ -8,13 +8,12 @@ import kong.unirest.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.dimelthoz.dygi.interfaceapplication.medias.MediasManager.mrlTimeline;
+
 public class Timeline {
 
     private static final long TIME_READ_FILE = 2000;
     private static long timerInitRead = System.currentTimeMillis();
-
-//    private static final String timelinePathFile = "src/storage/timeline/timeline.json";
-    private static final String timelinePathFile = "src/storage/timeline/new_timeline.json";
 
     public static void start() {
         new Thread(readTimeline).start();
@@ -33,7 +32,7 @@ public class Timeline {
     };
 
     public static void main() {
-        if (FileManager.doesFileExists(timelinePathFile)) {
+        if (FileManager.doesFileExists(mrlTimeline)) {
             System.out.println("file exists");
             readFile();
         }
@@ -48,7 +47,7 @@ public class Timeline {
 
 
     private static void readFile() {
-        String fileContent = FileManager.readFile(timelinePathFile);
+        String fileContent = FileManager.readFile(mrlTimeline);
         JSONObject jsonFile = new JSONObject(fileContent);
         System.out.println("Json file: " + jsonFile);
 
